@@ -421,6 +421,18 @@ function deferredAddZip(url, filename) {
     return deferred;
 }
 
+function pageSrcForDomain() {
+  const host = location.hostname;
+  selectors = {
+    'www.fanfiction.net': 'body #storytext',
+  }
+  const selector = selectors[host]
+  if (selector) {
+    return document.querySelector(selector)
+  }
+  return document.getElementsByTagName('body')[0];
+}
+
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     let imgsPromises = [];
     let result = {};
@@ -432,7 +444,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 
     if (request.type === 'extract-page') {
         styleFile = extractCss(request.includeStyle, request.appliedStyles)
-        pageSrc = document.getElementsByTagName('body')[0];
+        pageSrc = pageSrcForDomain();
         tmpContent = getContent(pageSrc);
     } else if (request.type === 'extract-selection') {
         styleFile = extractCss(request.includeStyle, request.appliedStyles)
