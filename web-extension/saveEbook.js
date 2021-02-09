@@ -132,6 +132,7 @@ function _buildEbook(allPages, fromMenu=false) {
             '<title>' + tmpPageTitle+ '</title>' +
             '<link href="../style/' + page.styleFileName + '" rel="stylesheet" type="text/css" />' +
             '</head><body>' +
+            '<h3>' + tmpPageTitle + '</h3>' +
             page.content +
             '</body></html>'
         );
@@ -185,7 +186,7 @@ function _buildEbook(allPages, fromMenu=false) {
     } catch (error) {
         console.log(error);
     }
-    
+
 
     zip.generateAsync({
             type: "blob",
